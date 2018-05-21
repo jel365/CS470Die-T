@@ -20,17 +20,22 @@ public class Mover : MonoBehaviour {
     Vector3 dest;
     // Use this for initialization
     void Start () {
-        
+        select = false;
 	}
 
     public void SetActivePlayer(GameObject g)
     {
+	if(!select)
+	{
         activePlayer = g;
         c = activePlayer.GetComponent<Character>();
+	}
     }
 
     public void SetActiveSpace(GameObject g)
     {
+	if(!select)
+	{
         if(activePlayer != null)
         {
             activeSpace = g;
@@ -41,6 +46,7 @@ public class Mover : MonoBehaviour {
         {
             Debug.Log("No Player Selected");
         }
+	}
     }
 	// Update is called once per frame
 	void Update () {
