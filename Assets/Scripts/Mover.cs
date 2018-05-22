@@ -10,7 +10,7 @@ public class Mover : MonoBehaviour
     GameObject activePlayer;
     GameObject activeSpace;
     Character c;
-    Tile t;
+    Tiles t;
     float s = 50;
     bool select;
     float x1;
@@ -42,7 +42,7 @@ public class Mover : MonoBehaviour
             if (activePlayer != null)
             {
                 activeSpace = g;
-                t = activeSpace.GetComponent<Tile>();
+                t = activeSpace.GetComponent<Tiles>();
                 select = true;
             }
             else
