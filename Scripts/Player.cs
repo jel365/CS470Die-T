@@ -13,7 +13,11 @@ public class Player : MonoBehaviour {
     {
         for(int i = 0; i < characterRoster.Length; i++)
         {
-            characterRoster[i].SetActive(true);
+            Character ch = characterRoster[i].GetComponent<Character>();
+            ch.ActiveStatus(false);
+            Debug.Log(ch.GetActive());
+            ch.ResetMoves();
+            Debug.Log(ch.getMoves());
         }
     }
 
@@ -21,7 +25,8 @@ public class Player : MonoBehaviour {
     {
         for (int i = 0; i < characterRoster.Length; i++)
         {
-            characterRoster[i].SetActive(false);
+            Character ch = characterRoster[i].GetComponent<Character>();
+            ch.ActiveStatus(false);
         }
     }
 	// Use this for initialization
@@ -31,9 +36,9 @@ public class Player : MonoBehaviour {
         
     }
 
-    public void setCharacter(GameObject []c)
+    public void setCharacter(GameObject c, int index)
     {
-        characterRoster = c;
+        characterRoster[index] = c;
     }
 
     public GameObject[] getCharacter()
@@ -44,6 +49,25 @@ public class Player : MonoBehaviour {
     public void setNum(int n)
     {
         playerNumber = n;
+    }
+
+    public int getNum()
+    {
+        return playerNumber;
+    }
+
+    public bool TurnDone()
+    {
+        for(int i = 0; i < characterRoster.Length; i++)
+        {
+            Character ch = characterRoster[i].GetComponent<Character>();
+            if(ch.GetActive())
+            {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     // Update is called once per frame

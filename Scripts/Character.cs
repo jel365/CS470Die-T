@@ -7,21 +7,26 @@ public class Character : MonoBehaviour {
     Color selected;
     Color old;
     Mover master;
-   
+    int moves;
     private int playerNum;
     public GameObject control;
+    public GameObject rule;
     bool active;
     void Start()
     {
-       
+        moves = 2;
         m = GetComponent<MeshRenderer>();
         m.material.color = Color.black;
         selected = Color.blue;
         old = m.material.color;
-
+        active = false;
         master = Camera.main.GetComponent<Mover>();
+       
     }
-
+    public void ResetMoves()
+    {
+        moves = 2;
+    }
     void OnMouseOver()
     {
         m.material.color = selected;
@@ -41,7 +46,7 @@ public class Character : MonoBehaviour {
 
     }
 
-    public void SetActive(bool a)
+    public void ActiveStatus(bool a)
     {
         active = a;
     }
@@ -58,18 +63,22 @@ public class Character : MonoBehaviour {
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && !GetActive())
-        {
-            SetActive(true);
-        }
-        else if (Input.GetKeyDown(KeyCode.Space) && GetActive())
-            {
-                SetActive(false);
-            }
+      
     }
 
     public void SetNum(int n)
     {
         playerNum = n;
     }
+
+    public int getMoves()
+    {
+        return moves;
+    }
+
+    public void decMoves()
+    {
+        moves--;
+    }
+
 }
