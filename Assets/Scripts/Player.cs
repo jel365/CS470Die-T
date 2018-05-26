@@ -3,21 +3,20 @@ using System.Collections;
 
 public class Player : MonoBehaviour {
     MeshRenderer m;
-    private Character[] characterRoster;
+    private GameObject[] characterRoster = new GameObject[3];
     private int playerNumber;
 
 
-    public Player(int playerNumber, Character[]characterRoster)
-    {
-        this.playerNumber = playerNumber;
-        this.characterRoster = characterRoster;
-    }
+   
 
     public void Activate()
     {
         for(int i = 0; i < characterRoster.Length; i++)
         {
-            characterRoster[i].SetActive(true);
+            Character ch = characterRoster[i].GetComponent<Character>();
+            ch.ActiveStatus(true);
+            Debug.Log(ch.GetActive());
+            ch.ResetMoves();
         }
     }
 
@@ -25,19 +24,53 @@ public class Player : MonoBehaviour {
     {
         for (int i = 0; i < characterRoster.Length; i++)
         {
-            characterRoster[i].SetActive(false);
+            Character ch = characterRoster[i].GetComponent<Character>();
+            ch.ActiveStatus(false);
         }
     }
 	// Use this for initialization
 	void Start () {
 
-     m = GetComponent<MeshRenderer>();
-        m.material.color = Color.black;
     
+        
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    public void setCharacter(GameObject []c)
+    {
+        characterRoster = c;
+    }
+
+    public GameObject[] getCharacter()
+    {
+        return characterRoster;
+    }
+
+    public void setNum(int n)
+    {
+        playerNumber = n;
+    }
+
+    public int getNum()
+    {
+        return playerNumber;
+    }
+
+    public bool TurnDone()
+    {
+        for(int i = 0; i < characterRoster.Length; i++)
+        {
+            Character ch = characterRoster[i].GetComponent<Character>();
+            if(ch.GetActive())
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    // Update is called once per frame
+    void Update () {
 	
 	}
 }

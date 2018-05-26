@@ -19,11 +19,15 @@ public class Mover : MonoBehaviour
     float z2;
     float offset;
     Vector3 dest;
+   
     // Use this for initialization
     void Start()
     {
         select = false;
+        
     }
+
+    
 
     public void SetActivePlayer(GameObject g)
     {
@@ -32,6 +36,11 @@ public class Mover : MonoBehaviour
         {
             activePlayer = g;
             c = activePlayer.GetComponent<Character>();
+            if(!c.GetActive())
+            {
+                Debug.Log("This character can't move");
+                activePlayer = null;
+            }
         }
     }
 
@@ -44,6 +53,12 @@ public class Mover : MonoBehaviour
                 activeSpace = g;
                 t = activeSpace.GetComponent<Tiles>();
                 select = true;
+                Character ch = activePlayer.GetComponent<Character>();
+                if (ch.getMoves() != 0)
+                {
+                    ch.decMoves();
+                }
+                
             }
             else
             {
@@ -54,11 +69,9 @@ public class Mover : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Space))
-        {
-            activePlayer = null;
-            activeSpace = null;
-        }
+
+       
+        
 
         
         if (activePlayer != null && activeSpace != null)
@@ -78,6 +91,11 @@ public class Mover : MonoBehaviour
                 if (activePlayer.transform.position == dest)
                 {
                     select = false;
+                    Character ch = activePlayer.GetComponent<Character>();
+                    if (ch.getMoves() == 0)
+                    {
+                        activePlayer = null;
+                    }
 
                 }
             }
